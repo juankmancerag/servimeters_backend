@@ -1,0 +1,92 @@
+[
+  {
+    "ID_ORDEN": "ORD-001",
+    "cliente": "Constructora Alfa",
+    "ciudad": "Bogota",
+    "Linea": "TV",
+    "Cod_servicio": "tv-01",
+    "mail_cliente": "contacto@alfa.com",
+    "contacto_cliente": "Carlos Pérez"
+  },
+  {
+    "ID_ORDEN": "ORD-002",
+    "cliente": "Electro Servicios SAS",
+    "ciudad": "Medellin",
+    "Linea": "RETIE",
+    "Cod_servicio": "RETIE1",
+    "mail_cliente": "ventas@electroservicios.com",
+    "contacto_cliente": "María Gómez"
+  },
+  {
+    "ID_ORDEN": "ORD-003",
+    "cliente": "Obras y Montajes LTDA",
+    "ciudad": "Cali",
+    "Linea": "RETILAB",
+    "Cod_servicio": "RETILAB1",
+    "mail_cliente": "info@obrasymontajes.com",
+    "contacto_cliente": "Andrés Ruiz"
+  },
+  {
+    "ID_ORDEN": "ORD-004",
+    "cliente": "Industrias Beta",
+    "ciudad": "Barranquilla",
+    "Linea": "TV",
+    "Cod_servicio": "tv-02",
+    "mail_cliente": "soporte@beta.com",
+    "contacto_cliente": "Laura Mendoza"
+  },
+  {
+    "ID_ORDEN": "ORD-005",
+    "cliente": "Construcciones Delta",
+    "ciudad": "Bogota",
+    "Linea": "RETIE",
+    "Cod_servicio": "RETIE2",
+    "mail_cliente": "proyectos@delta.com",
+    "contacto_cliente": "Pedro Castaño"
+  },
+  {
+    "ID_ORDEN": "ORD-006",
+    "cliente": "TecnoInstalaciones SAS",
+    "ciudad": "Medellin",
+    "Linea": "TV",
+    "Cod_servicio": "tv-03",
+    "mail_cliente": "contacto@tecnoinstalaciones.com",
+    "contacto_cliente": "Sandra López"
+  },
+  {
+    "ID_ORDEN": "ORD-007",
+    "cliente": "Servicios Eléctricos JH",
+    "ciudad": "Cali",
+    "Linea": "RETILAB",
+    "Cod_servicio": "RETILAB1",
+    "mail_cliente": "servicios@jh.com",
+    "contacto_cliente": "Juan Herrera"
+  },
+  {
+    "ID_ORDEN": "ORD-008",
+    "cliente": "Energía Total",
+    "ciudad": "Barranquilla",
+    "Linea": "RETIE",
+    "Cod_servicio": "RETIE1",
+    "mail_cliente": "contacto@energiatotal.com",
+    "contacto_cliente": "Paola Jiménez"
+  },
+  {
+    "ID_ORDEN": "ORD-009",
+    "cliente": "Proyectos Omega",
+    "ciudad": "Bogota",
+    "Linea": "TV",
+    "Cod_servicio": "tv-01",
+    "mail_cliente": "ventas@omega.com",
+    "contacto_cliente": "Felipe Castro"
+  },
+  {
+    "ID_ORDEN": "ORD-010",
+    "cliente": "Instalaciones Gamma",
+    "ciudad": "Medellin",
+    "Linea": "RETILAB",
+    "Cod_servicio": "RETILAB1",
+    "mail_cliente": "contacto@gamma.com",
+    "contacto_cliente": "Diana Rodríguez"
+  }
+]

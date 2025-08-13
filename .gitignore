@@ -1,0 +1,52 @@
+# ========================
+# Entornos virtuales
+# ========================
+venv/
+.env/
+.venv/
+env/
+ENV/
+
+# ========================
+# Archivos y carpetas de VS Code
+# ========================
+.vscode/
+.history/
+
+# ========================
+# Archivos temporales y de compilación
+# ========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.dll
+
+# ========================
+# Archivos de sistema
+# ========================
+.DS_Store
+Thumbs.db
+
+
+# ========================
+# Archivos de logs
+# ========================
+*.log
+logs/
+
+# ========================
+# Archivos de pruebas temporales
+# ========================
+tests/tmp/
+*.tmp
+*.bak
+*.swp
+
+# ========================
+# Archivos de AWS / Credenciales
+# ========================
+.aws/
+*.pem
+*.key
