@@ -12,8 +12,8 @@ from config.config import (
 # Tools centralizados
 from src.agents.tools.agents_tools import (
     obtener_resumen_ordenes,
-    evaluar_asignaciones,        # <-- Tool para asignación inicial
-    evaluar_asignaciones    # <-- Nuevo Tool evaluador
+    asignar_ordenes,        # <-- Tool para asignación inicial
+    evaluar_asignaciones    # <-- Tool evaluador
 )
 
 class agente_orquestador:
