@@ -1,4 +1,151 @@
-Overview
+Descripción general
+
+Este repositorio es una versión muy temprana del backend para “Servimeters”.
+La mayoría de los archivos son solo andamiaje (scaffolding), pero las partes implementadas se enfocan en:
+
+Ejecutar un flujo de orquestación de agentes por línea de comandos.
+
+Usar servicios de AWS (Bedrock, DynamoDB, S3) para almacenar y recuperar datos.
+
+Demostrar una habilidad de ejemplo para interpretar resultados de la prueba psicológica WISC.
+
+servimeters_backend/
+├── main.py                  # Punto de entrada CLI
+├── config/                  # Constantes globales (AWS, Bedrock, nombres de tablas…)
+├── src/
+│   ├── agents/              # Orquestación LLM, herramientas y habilidades de dominio
+│   ├── utils/               # Ayudantes para DynamoDB y S3
+│   ├── handlers/            # Actualmente vacío (posible lugar para handlers de AWS Lambda)
+│   └── tests/               # Datos de ejemplo y script de prueba manual
+└── docs/, serverless.yml, requirements.txt  # Presentes pero vacíos
+
+Componentes clave
+1. Punto de entrada CLI
+
+main.py lanza un bucle interactivo que envía mensajes del usuario a un agente “Servimeters” impulsado por un orquestador (src/agents/agents/agente_orquestador.py).
+
+El orquestador construye un BedrockModel (Anthropic Haiku) y delega en herramientas para:
+
+Obtener resúmenes de órdenes.
+
+Asignar inspectores a órdenes (herramienta aún no implementada).
+
+Evaluar los resultados de las asignaciones.
+
+2. Herramientas y habilidades del agente
+
+Herramientas (src/agents/tools/agents_tools.py):
+
+obtener_resumen_ordenes: lee órdenes en DynamoDB y agrega totales por servicio y ciudad.
+
+obtener_inspectores_fijos: devuelve una lista fija de inspectores.
+
+generar_disponibilidad_tool: genera bloques de disponibilidad aleatorios para inspectores.
+
+evaluar_asignaciones: inicia otro agente LLM para auditar las asignaciones de inspectores.
+
+Nota: en el orquestador se hace referencia a asignar_ordenes pero no existe implementación; hay que considerar este vacío.
+
+Habilidad (src/agents/skills/interpretar_wisc.py):
+
+Analiza datos de evaluación psicológica (WISC) y escribe interpretaciones narrativas en DynamoDB mediante ayudantes externos (dynamo.actualizar_json).
+
+3. Capa de utilidades
+
+Ayudantes para DynamoDB (src/utils/consultar_ordenes.py y src/utils/insertar_json.py):
+
+obtener_ordenes: construye filtros de búsqueda dinámica por campos como ID, ciudad o servicio.
+
+insertar_ordenes: carga órdenes de ejemplo desde src/tests/ordenes.json en DynamoDB.
+
+Nota: los nombres de campos en consultar_ordenes (ej. codigo_servicio, linea) no coinciden con las claves del JSON de ejemplo (Cod_servicio, Linea), lo que romperá los filtros.
+
+Ayudante S3 (src/utils/s3_utils.py):
+
+subir_a_s3: sube un archivo local y devuelve una URL pública.
+
+4. Configuración
+
+config/config.py contiene constantes del proyecto: región AWS, IDs de modelos Bedrock, nombres de tablas/buckets, etc. Es importado por varios módulos; mantenerlo actualizado para despliegues.
+
+5. Pruebas y datos de ejemplo
+
+src/tests/ordenes.json: datos de órdenes ficticias para pruebas locales.
+
+src/tests/get_ordenes_test.py: script manual que demuestra cómo llamar a obtener_ordenes (no es una prueba unitaria real).
+
+Resumen general
+
+El repositorio es un backend prototipo para un flujo de trabajo asistido por IA que recupera órdenes de servicio, asigna inspectores y evalúa las asignaciones usando un LLM (Amazon Bedrock vía el SDK “strands”). También incluye herramientas para interactuar con DynamoDB y S3. La mayoría de los archivos son plantillas o ejemplos mínimos, por lo que el código aún está en una fase inicial.
+
+Estructura de directorios
+Ruta	Propósito
+main.py	Punto de entrada por línea de comandos. Inicia el agente orquestador y abre un bucle interactivo donde los mensajes del usuario se envían al agente.
+config/	Configuración central (config.py) con región AWS, ajustes de modelo Bedrock, nombre de la tabla DynamoDB y bucket S3.
+src/agents/	Código y herramientas relacionadas con el agente.
+• agents/agente_orquestador.py: configura el agente principal y declara herramientas disponibles.
+• tools/agents_tools.py: define utilidades (resúmenes de órdenes, disponibilidad, evaluación, etc.).
+• skills/: contiene habilidades de dominio; solo interpretar_wisc.py tiene contenido.
+src/utils/	Scripts de utilidades.
+• consultar_ordenes.py: consulta órdenes en DynamoDB con filtros.
+• insertar_json.py: inserta órdenes de prueba desde JSON.
+• s3_utils.py: sube archivos a S3 y devuelve la URL pública.
+src/tests/	Archivos de prueba/demostración muy simples (ej. get_ordenes_test.py).
+docs/, README.md, serverless.yml, requirements.txt	Marcadores de posición vacíos.
+Conceptos importantes y dependencias externas
+
+Strands: biblioteca que provee las abstracciones Agent y BedrockModel. Fundamental para entender cómo extender las capacidades del agente.
+
+Amazon Bedrock: servicio LLM; configuración en config/config.py.
+
+AWS Services: uso de boto3 para DynamoDB y S3; se requieren credenciales AWS configuradas.
+
+JSON y Pandas: uso extensivo de JSON para salidas estructuradas; pandas aparece en utilidades (ej. resúmenes).
+
+Recomendaciones para nuevos colaboradores
+
+Estudiar el flujo del orquestador
+Revisar juntos agente_orquestador.py y agents_tools.py para comprender la interacción agente-herramienta con Strands.
+
+Implementar funciones faltantes o vacías
+
+asignar_ordenes (referenciada pero no implementada).
+
+Módulos de habilidades vacíos como generar_reporte.py.
+
+Explorar la integración con AWS
+
+Cómo se construyen los filtros en DynamoDB (consultar_ordenes.py).
+
+Cómo cargar datos de ejemplo (insertar_json.py).
+
+Subida de archivos con s3_utils.py.
+
+Mejorar pruebas y documentación
+
+Ampliar cobertura de pruebas en src/tests.
+
+Completar README.md y docs/.
+
+Profundizar en habilidades avanzadas
+
+Analizar interpretar_wisc.py para entender integración compleja con DynamoDB y módulos externos.
+
+Notas importantes
+
+Muchos archivos son placeholders: README, docs, requirements, handlers y algunas skills/tools.
+
+Falta importación de asignar_ordenes en agente_orquestador.
+
+Inconsistencia en nombres de campos: unificar esquema (codigo_servicio vs Cod_servicio).
+
+Dependencias externas:
+
+strands y dynamo.actualizar_json no están incluidos.
+
+pandas se importa en agents_tools.py pero no se usa.
+
+Credenciales AWS: se asume que están configuradas; no hay gestión de autenticación en el código.verview
 This repository is a very early-stage backend for “Servimeters”.
 Most of the files are scaffolding, but the implemented pieces focus on:
 
